@@ -501,7 +501,8 @@ def main():
                  for u, d, p in sorted(urls, key=lambda x: x[0]) if not p.get('noindex'))
     open(os.path.join(DIST, 'sitemap.xml'), 'w', encoding='utf-8').write(
         f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>')
-    shutil.copy(os.path.join(DIST, 'sitemap.xml'), os.path.join(DIST, 'sitemap_index.xml'))  # старый адрес Yoast
+    for alias in ('sitemap_index.xml', 'page-sitemap.xml', 'post-sitemap.xml'):  # старые адреса Yoast, их знают поисковики
+        shutil.copy(os.path.join(DIST, 'sitemap.xml'), os.path.join(DIST, alias))
     if BASE != S['domain']:  # тестовая копия не индексируется
         open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nDisallow: /\n')
     else:
