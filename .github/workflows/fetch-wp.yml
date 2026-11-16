@@ -16,8 +16,15 @@ jobs:
         run: |
           mkdir -p src/wp/css
           ids="144 1290 1420 1423 1429 1433 1437 1441 1445 1449 1578 1579 2174 2515 2880 3071 4314 4324 4761 5004 5458 4985 4979 4960 4950 4937 4927 4920 4898 4870 4843 4685 4621 4492 4428 4421 4392 2777 2486 2467 2297 2150 2231 2104 2106 2314 2133 921 906 894 878 748 737 230 15 3 5396 5330 5292 5197 5058 5044 196 200 208 204 192"
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36"
           for id in $ids; do
-            curl -sfL -A "Mozilla/5.0" "https://kepler.by/wp-content/uploads/elementor/css/post-$id.css" -o "src/wp/css/post-$id.css" || rm -f "src/wp/css/post-$id.css"
+            [ -s "src/wp/css/post-$id.css" ] && continue
+            for try in 1 2 3; do
+              code=$(curl -sL -A "$UA" -H "Referer: https://kepler.by/" -w '%{http_code}' "https://kepler.by/wp-content/uploads/elementor/css/post-$id.css" -o "src/wp/css/post-$id.css")
+              [ "$code" = "200" ] && break
+              rm -f "src/wp/css/post-$id.css"; [ "$code" = "404" ] && break; sleep 3
+            done
+            echo "post-$id $code"; sleep 1
           done
           ls src/wp/css | wc -l
       - name: Скачать картинки
