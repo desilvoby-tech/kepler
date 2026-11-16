@@ -1,0 +1,44 @@
+# Сборка сайта из content/ и публикация на GitHub Pages при каждом изменении.
+# Пока сайт на тестовом адресе — BASE/PREFIX указывают на github.io/kepler.
+# После переключения домена: BASE=https://kepler.by, PREFIX пустой, файл CNAME с kepler.by.
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows: [fetch-wp]
+    types: [completed]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+env:
+  BASE: https://desilvoby-tech.github.io/kepler
+  PREFIX: /kepler
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python tools/build.py --base "$BASE" ${PREFIX:+--prefix "$PREFIX"}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.d.outputs.page_url }}
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
