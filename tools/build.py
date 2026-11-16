@@ -344,7 +344,7 @@ def layout(p, body, title, desc, trail):
 <meta property="og:type" content="{'article' if p['type'] == 'post' else 'website'}"><meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canon}">
 <meta property="og:image" content="{esc(og_img)}"><meta property="og:locale" content="ru_RU"><meta property="og:site_name" content="Кеплер">
-<link rel="icon" href="/assets/favicon-32.png" sizes="32x32"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" href="https://kepler.by/wp-content/uploads/2026/04/cropped-%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF3-32x32.jpg" sizes="32x32"><link rel="apple-touch-icon" href="https://kepler.by/wp-content/uploads/2026/04/cropped-%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF3-180x180.jpg">
 <link rel="stylesheet" href="/assets/style.css">
 {schemas(p, trail)}{ym}
 </head><body>
