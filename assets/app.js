@@ -54,12 +54,15 @@
       if(digits.length < 12){ f.phone.focus(); f.phone.setCustomValidity('Введите номер полностью'); f.phone.reportValidity(); f.phone.setCustomValidity(''); return; }
       f.page.value = location.pathname;
       var btn = f.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Отправляем…';
-      var data = { _subject: 'Заявка с сайта kepler.by', 'Телефон': f.phone.value, 'Как удобнее': f.how.value,
-                   'Услуга': f.service.value || document.title, 'Страница': location.href, _template: 'table', _captcha: 'false' };
-      fetch(K.form, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
-        .then(function(r){ return r.json(); })
-        .then(function(){ done(); })
-        .catch(function(){ done(); });
+      // заявка уходит в онлайн-чат → бот пересылает операторам в Telegram
+      var sid = (Math.random().toString(36) + Math.random().toString(36) + Date.now().toString(36)).replace(/[^a-z0-9]/g, '').slice(0, 24);
+      var text = '📝 Заявка с сайта\nТелефон: ' + f.phone.value + '\nКак удобнее: ' + f.how.value +
+                 '\nУслуга: ' + (f.service.value || document.title) + '\nСтраница: ' + location.href;
+      fetch(K.form, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sid: sid, text: text }) })
+        .then(function(r){ if(!r.ok) throw new Error(r.status); done(); })
+        .catch(function(){ btn.disabled = false; btn.textContent = 'Жду звонка';
+          alertBox('Не удалось отправить. Позвоните нам: ' + (document.querySelector('a[href^="tel:"]') || {}).textContent); });
+      function alertBox(t){ var o = f.querySelector('.form-ok'); o.hidden = false; o.style.background = '#fdecec'; o.style.color = '#7f1d1d'; o.textContent = t; }
       function done(){
         f.querySelector('.form-ok').hidden = false;
         btn.textContent = 'Отправлено'; goal('form_sent');

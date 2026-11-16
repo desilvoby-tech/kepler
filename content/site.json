@@ -12,8 +12,14 @@
  "postal": "246022",
  "hours": "Пн–Вс: 9:00–21:00",
  "hours_detail": [
-  ["Сервисный центр", "Пн–Пт 10:00–18:30, Сб–Вс 10:00–16:00"],
-  ["Курьер и выезд мастера", "Пн–Вс 9:00–21:00"]
+  [
+   "Сервисный центр",
+   "Пн–Пт 10:00–18:30, Сб–Вс 10:00–16:00"
+  ],
+  [
+   "Курьер и выезд мастера",
+   "Пн–Вс 9:00–21:00"
+  ]
  ],
  "map_url": "https://yandex.by/maps/-/CHfBrOLe",
  "yandex_map_um": "constructor:6ed1effa985ebe1a3c2289ebb014fa08b1ed66bdf658d190468cad959cf38d4f",
@@ -27,50 +33,164 @@
  "warranty": "до 2 лет",
  "legal": "ИП Купцов Д. И. · УНП 491544930 · 246022, г. Гомель, ул. Рогачёвская, д. 13, о. 2",
  "form_email": "vtop100k@gmail.com",
- "yandex_metrika": "",
+ "yandex_metrika": "100574248",
  "nav": [
-  {"title": "Ремонт техники", "url": "/", "children": [
-   {"title": "Ремонт телефонов", "url": "/remont-telefonov/"},
-   {"title": "Ремонт ноутбуков", "url": "/remont-noutbukov/"},
-   {"title": "Ремонт компьютеров", "url": "/remont-kompyuterov/"},
-   {"title": "Ремонт принтеров", "url": "/remont-printerov/"},
-   {"title": "Ремонт телевизоров", "url": "/remont-televizorov/"},
-   {"title": "Ремонт мониторов", "url": "/remont-monitorov/"},
-   {"title": "Ремонт кофемашин", "url": "/remont-kofemashin/"},
-   {"title": "Ремонт стиральных машин", "url": "/remont-stiralnyh-mashin/"},
-   {"title": "Ремонт посудомоечных машин", "url": "/remont-posudomoechnyh-mashin/"},
-   {"title": "Ремонт духовых шкафов", "url": "/remont-duhovyh-shkafov/"}
-  ]},
-  {"title": "Компьютерная помощь", "url": "/kompyuternaya-pomoshh/", "children": [
-   {"title": "Установка Windows", "url": "/kompyuternaya-pomoshh/ustanovka-windows/"},
-   {"title": "Установка программ", "url": "/kompyuternaya-pomoshh/ustanovka-programm/"},
-   {"title": "Установка драйверов", "url": "/kompyuternaya-pomoshh/ustanovka-draiverov/"},
-   {"title": "Настройка Wi-Fi", "url": "/kompyuternaya-pomoshh/nastrojka-wi-fi/"},
-   {"title": "Удаление вирусов", "url": "/kompyuternaya-pomoshh/udalenie-virusov/"},
-   {"title": "Установка антивируса", "url": "/kompyuternaya-pomoshh/ustanovka-antivirusa/"}
-  ]},
-  {"title": "Цены", "url": "/ceny-na-remont/"},
-  {"title": "Скидки", "url": "/skidki/"},
-  {"title": "Отзывы", "url": "/otzyvy/"},
-  {"title": "Контакты", "url": "/kontakty/"}
+  {
+   "title": "Ремонт техники",
+   "url": "/",
+   "children": [
+    {
+     "title": "Ремонт телефонов",
+     "url": "/remont-telefonov/"
+    },
+    {
+     "title": "Ремонт ноутбуков",
+     "url": "/remont-noutbukov/"
+    },
+    {
+     "title": "Ремонт компьютеров",
+     "url": "/remont-kompyuterov/"
+    },
+    {
+     "title": "Ремонт принтеров",
+     "url": "/remont-printerov/"
+    },
+    {
+     "title": "Ремонт телевизоров",
+     "url": "/remont-televizorov/"
+    },
+    {
+     "title": "Ремонт мониторов",
+     "url": "/remont-monitorov/"
+    },
+    {
+     "title": "Ремонт кофемашин",
+     "url": "/remont-kofemashin/"
+    },
+    {
+     "title": "Ремонт стиральных машин",
+     "url": "/remont-stiralnyh-mashin/"
+    },
+    {
+     "title": "Ремонт посудомоечных машин",
+     "url": "/remont-posudomoechnyh-mashin/"
+    },
+    {
+     "title": "Ремонт духовых шкафов",
+     "url": "/remont-duhovyh-shkafov/"
+    }
+   ]
+  },
+  {
+   "title": "Компьютерная помощь",
+   "url": "/kompyuternaya-pomoshh/",
+   "children": [
+    {
+     "title": "Установка Windows",
+     "url": "/kompyuternaya-pomoshh/ustanovka-windows/"
+    },
+    {
+     "title": "Установка программ",
+     "url": "/kompyuternaya-pomoshh/ustanovka-programm/"
+    },
+    {
+     "title": "Установка драйверов",
+     "url": "/kompyuternaya-pomoshh/ustanovka-draiverov/"
+    },
+    {
+     "title": "Настройка Wi-Fi",
+     "url": "/kompyuternaya-pomoshh/nastrojka-wi-fi/"
+    },
+    {
+     "title": "Удаление вирусов",
+     "url": "/kompyuternaya-pomoshh/udalenie-virusov/"
+    },
+    {
+     "title": "Установка антивируса",
+     "url": "/kompyuternaya-pomoshh/ustanovka-antivirusa/"
+    }
+   ]
+  },
+  {
+   "title": "Цены",
+   "url": "/ceny-na-remont/"
+  },
+  {
+   "title": "Скидки",
+   "url": "/skidki/"
+  },
+  {
+   "title": "Отзывы",
+   "url": "/otzyvy/"
+  },
+  {
+   "title": "Контакты",
+   "url": "/kontakty/"
+  }
  ],
  "footer_links": [
-  {"title": "О нас", "url": "/o-nas/"},
-  {"title": "Гарантия и оплата", "url": "/garantiya/"},
-  {"title": "Реквизиты", "url": "/rekvizity/"},
-  {"title": "Полезные статьи", "url": "/category/vse-stati/"},
-  {"title": "Пользовательское соглашение", "url": "/privacy-policy/"}
+  {
+   "title": "О нас",
+   "url": "/o-nas/"
+  },
+  {
+   "title": "Гарантия и оплата",
+   "url": "/garantiya/"
+  },
+  {
+   "title": "Реквизиты",
+   "url": "/rekvizity/"
+  },
+  {
+   "title": "Полезные статьи",
+   "url": "/category/vse-stati/"
+  },
+  {
+   "title": "Пользовательское соглашение",
+   "url": "/privacy-policy/"
+  }
  ],
  "brands": [
-  {"title": "Apple", "url": "/remont-telefonov/remont-aifonov-v-gomele/"},
-  {"title": "Samsung", "url": "/remont-telefonov/samsung/"},
-  {"title": "Xiaomi", "url": "/remont-telefonov/xiaomi/"},
-  {"title": "Huawei", "url": "/remont-telefonov/huawei/"},
-  {"title": "Honor", "url": "/remont-telefonov/honor/"},
-  {"title": "Poco", "url": "/remont-telefonov/roso/"},
-  {"title": "Meizu", "url": "/remont-telefonov/meizu/"},
-  {"title": "Sony", "url": "/remont-telefonov/sony/"},
-  {"title": "Lenovo", "url": "/remont-telefonov/lenovo/"},
-  {"title": "ZTE", "url": "/remont-telefonov/zte/"}
- ]
+  {
+   "title": "Apple",
+   "url": "/remont-telefonov/remont-aifonov-v-gomele/"
+  },
+  {
+   "title": "Samsung",
+   "url": "/remont-telefonov/samsung/"
+  },
+  {
+   "title": "Xiaomi",
+   "url": "/remont-telefonov/xiaomi/"
+  },
+  {
+   "title": "Huawei",
+   "url": "/remont-telefonov/huawei/"
+  },
+  {
+   "title": "Honor",
+   "url": "/remont-telefonov/honor/"
+  },
+  {
+   "title": "Poco",
+   "url": "/remont-telefonov/roso/"
+  },
+  {
+   "title": "Meizu",
+   "url": "/remont-telefonov/meizu/"
+  },
+  {
+   "title": "Sony",
+   "url": "/remont-telefonov/sony/"
+  },
+  {
+   "title": "Lenovo",
+   "url": "/remont-telefonov/lenovo/"
+  },
+  {
+   "title": "ZTE",
+   "url": "/remont-telefonov/zte/"
+  }
+ ],
+ "chat": true
 }

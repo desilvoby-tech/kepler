@@ -1,0 +1,186 @@
+<style>
+.kp-tg-float{display:none!important}
+#kplc-btn{position:fixed;right:20px;bottom:90px;z-index:99998;width:56px;height:56px;border-radius:50%;background:#229ED9;border:0;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:transform .2s,background .2s;padding:0}
+#kplc-btn:hover{background:#1a8bc2;transform:scale(1.08)}
+#kplc-btn svg{width:28px;height:28px;fill:#fff}
+#kplc-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#229ED9;z-index:-1;animation:kplcEcho 3.5s ease-out infinite;pointer-events:none}
+@keyframes kplcEcho{0%{transform:scale(1);opacity:.25}100%{transform:scale(1.45);opacity:0}}
+@media (prefers-reduced-motion:reduce){#kplc-btn::before{display:none}}
+#kplc-badge{position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;border-radius:10px;background:#e53935;color:#fff;font:bold 12px/20px Arial,sans-serif;text-align:center;padding:0 5px;display:none}
+#kplc-panel{position:fixed;right:20px;bottom:156px;z-index:99999;width:350px;max-width:calc(100vw - 24px);height:500px;max-height:calc(100vh - 180px);
+  background:#fff;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.25);display:none;flex-direction:column;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#222}
+#kplc-panel.open{display:flex}
+#kplc-head{background:#229ED9;color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px}
+#kplc-head .t{font-weight:bold;font-size:15px}#kplc-head .s{font-size:12px;opacity:.9}
+#kplc-head .dot{width:9px;height:9px;border-radius:50%;background:#7CFC9A;display:inline-block;margin-right:5px}
+#kplc-x{margin-left:auto;background:none;border:0;color:#fff;font-size:24px;line-height:1;cursor:pointer;padding:0 2px}
+#kplc-msgs{flex:1;overflow-y:auto;padding:12px;background:#f3f6f9;display:flex;flex-direction:column;gap:8px}
+.kplc-m{max-width:82%;padding:8px 11px;border-radius:14px;font-size:14px;line-height:1.4;white-space:pre-wrap;word-wrap:break-word}
+.kplc-m.user{align-self:flex-end;background:#229ED9;color:#fff;border-bottom-right-radius:4px}
+.kplc-m.bot,.kplc-m.op{align-self:flex-start;background:#fff;border-bottom-left-radius:4px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.kplc-m.op{border-left:3px solid #1aa260}
+.kplc-m .who{display:block;font-size:11px;color:#1aa260;font-weight:bold;margin-bottom:2px}
+.kplc-typing{align-self:flex-start;color:#888;font-size:13px;font-style:italic;display:none}
+#kplc-form{display:flex;border-top:1px solid #e5e9ee;background:#fff}
+#kplc-in{flex:1;border:0;padding:12px;font-size:14px;outline:none;resize:none;height:44px;overflow:hidden;font-family:inherit;color:#222;background:#fff}
+#kplc-send{border:0;background:none;color:#229ED9;font-weight:bold;padding:0 14px;cursor:pointer;font-size:14px}
+#kplc-foot{font-size:11.5px;color:#777;text-align:center;padding:6px 8px 8px;background:#fff}
+#kplc-foot a{color:#229ED9;text-decoration:none}
+@media (max-width:480px){#kplc-panel{right:12px;left:12px;width:auto;bottom:150px;height:70vh}#kplc-btn{right:14px;bottom:80px;width:52px;height:52px}}
+#kplc-foot a{white-space:nowrap}
+#kplc-foot svg{width:13px;height:13px;fill:currentColor;vertical-align:-2px;margin:0 3px 0 2px}
+#kplc-foot{line-height:1.6}
+@media (max-width:480px){
+#kplc-panel{left:8px;right:8px;width:auto;max-width:none;max-height:none;border-radius:14px}
+#kplc-head{padding:9px 12px}#kplc-head .t{font-size:14px}#kplc-head .s{font-size:11px}
+#kplc-msgs{padding:9px;gap:6px}.kplc-m{padding:7px 10px;max-width:86%}
+#kplc-in{font-size:16px;height:42px;padding:10px}
+#kplc-foot{font-size:11px;padding:4px 6px 6px}
+#kplc-btn.kb-hide{display:none}
+}
+#kplc-hints{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;padding:8px 10px 6px;background:#f3f6f9}
+#kplc-hints:empty{display:none}
+.kplc-h{border:1.5px solid #229ED9;color:#229ED9;background:#fff;border-radius:16px;padding:6px 12px;font:13px/1.3 Arial,Helvetica,sans-serif;cursor:pointer;text-align:right;max-width:100%}
+.kplc-h:hover{background:#229ED9;color:#fff}
+@media (max-width:480px){#kplc-hints{padding:6px 8px 4px;gap:5px}.kplc-h{font-size:12.5px;padding:5px 10px}}
+/* дизайн окна как на e-group.by */
+#kplc-panel{border-radius:10px!important;width:400px}
+#kplc-head{background:#3b1fdc!important;padding:16px 20px!important}
+#kplc-head .t{font-size:17px!important;font-weight:700!important}
+#kplc-head .s{font-size:13px!important;opacity:.75!important}
+#kplc-msgs{background:#fff!important}
+.kplc-m.user{background:#3b1fdc!important}
+.kplc-m.bot,.kplc-m.op{background:#f1f3f7!important;box-shadow:none!important}
+#kplc-hints{background:#fff!important;padding:10px 18px 14px!important;gap:9px!important;flex-direction:column!important;align-items:flex-end!important}
+#kplc-panel .kplc-h{background:#fff!important;color:#2f6fe4!important;border:1.5px solid #2f6fe4!important;border-radius:22px!important;padding:8px 18px!important;
+  font:15px/1.3 Arial,Helvetica,sans-serif!important;box-shadow:none!important;text-transform:none!important;letter-spacing:normal!important;margin:0!important;
+  width:auto!important;height:auto!important;min-height:0!important;text-align:right!important}
+#kplc-panel .kplc-h:hover{background:#2f6fe4!important;color:#fff!important}
+#kplc-form{border-top:1px solid #e9ecf1!important;align-items:center!important;padding:6px 10px 6px 2px!important}
+#kplc-in{font-size:15px!important;height:48px!important;padding:14px 16px!important}
+#kplc-send{width:40px!important;height:40px!important;border-radius:50%!important;background:#eef0f4!important;color:#9aa3b2!important;padding:0!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 40px!important;border:0!important;box-shadow:none!important;min-height:0!important}
+#kplc-send svg{width:18px;height:18px;fill:currentColor}
+#kplc-send:hover{background:#3b1fdc!important;color:#fff!important}
+#kplc-btn,#kplc-btn::before,#kplc-btn:hover{background:#3b1fdc!important}
+@media (max-width:480px){#kplc-panel{width:auto}#kplc-hints{padding:8px 12px 10px!important;gap:7px!important}#kplc-panel .kplc-h{font-size:14px!important;padding:7px 14px!important}}
+#kplc-hints.kplc-hide{display:none!important}
+</style>
+
+<button id="kplc-btn" type="button" aria-label="Открыть чат">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.6 3.4 6.1-.2 1.3-.8 2.6-1.8 3.6 2 0 3.8-.7 5.1-1.8 1 .3 2.1.4 3.3.4 5.5 0 10-3.6 10-8S17.5 3 12 3zm-4.5 9.2a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4zm4.5 0a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4zm4.5 0a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4z"/></svg>
+  <span id="kplc-badge"></span>
+</button>
+<div id="kplc-panel" role="dialog" aria-label="Онлайн-чат Кеплер-центр">
+  <div id="kplc-head"><div><div class="t">Напишите ваше сообщение</div><div class="s">Операторы онлайн!</div></div>
+    <button id="kplc-x" type="button" aria-label="Закрыть">×</button></div>
+  <div id="kplc-msgs"><div class="kplc-typing" id="kplc-typing">печатает…</div></div>
+  <div id="kplc-hints"></div>
+  <form id="kplc-form"><textarea id="kplc-in" rows="1" maxlength="1000" placeholder="Введите сообщение"></textarea><button id="kplc-send" type="submit" aria-label="Отправить"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-7 7 1.4 1.4L11 7.8V20h2V7.8l4.6 4.6L19 11z"/></svg></button></form>
+  <div id="kplc-foot">Также можно написать: <a href="https://t.me/+375293213333" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 11.2 20.6 4.1c.9-.3 1.6.2 1.3 1.5l-3.1 14.6c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.9 14.2 2.3 12.8c-1-.3-1-1 .1-1.6z"/></svg>Telegram</a> · <a href="viber://chat?number=%2B375293213333"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.9 2 3 5.4 3 10.3c0 2.8 1.3 5.1 3.4 6.6V21l3.3-2.1c.8.2 1.5.3 2.3.3 5.1 0 9-3.4 9-8.4S17.1 2 12 2zm3.9 11.6-.7.7c-.6.6-2 .1-3.4-1.2-1.4-1.3-2.1-2.8-1.6-3.4l.6-.7c.3-.3.2-.7-.1-1l-.9-1.1c-.3-.3-.8-.3-1.1 0l-.5.5c-1.2 1.2.4 4 2.6 6.2s5 3.7 6.2 2.5l.5-.5c.3-.3.3-.8 0-1.1l-1.1-.9c-.3-.3-.7-.3-1 0z"/></svg>Viber</a> · <a href="mailto:vtop100k@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.4 7H4v.6l8 5.4 8-5.4V7h-.4L12 12.2z"/></svg>Gmail</a></div>
+</div>
+
+<script>
+(function () {
+  var API = '/?rest_route=/kpl/v1';
+  var $ = function (id) { return document.getElementById(id); };
+  var btn = $('kplc-btn'), panel = $('kplc-panel'), msgs = $('kplc-msgs'), typing = $('kplc-typing'),
+      input = $('kplc-in'), badge = $('kplc-badge');
+  var store = {};
+  function get(k) { try { return localStorage.getItem(k); } catch (e) { return store[k] || null; } }
+  function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { store[k] = v; } }
+  var sid = get('kplc_sid');
+  if (!sid || !/^[a-zA-Z0-9]{16,40}$/.test(sid)) {
+    sid = ''; var abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    for (var i = 0; i < 24; i++) sid += abc.charAt(Math.floor(Math.random() * abc.length));
+    set('kplc_sid', sid);
+  }
+  var last = 0, open = false, loaded = false, unread = 0, waitUntil = 0, timer = null;
+  var seenId = +(get('kplc_seen') || 0);
+
+  function add(sender, text) {
+    var d = document.createElement('div'); d.className = 'kplc-m ' + sender;
+    if (sender === 'op') { var w = document.createElement('span'); w.className = 'who'; w.textContent = 'Специалист'; d.appendChild(w); }
+    d.appendChild(document.createTextNode(text));
+    msgs.insertBefore(d, typing); msgs.scrollTop = msgs.scrollHeight;
+  }
+  function showBadge() { badge.style.display = unread ? 'block' : 'none'; badge.textContent = unread; }
+
+  function poll() {
+    return fetch(API + '/poll&sid=' + sid + '&after=' + last, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (rows) {
+        rows.forEach(function (m) {
+          if (+m.id <= last) return; // уже показано (два опроса пришли одновременно)
+          last = Math.max(last, +m.id);
+          if (m.sender !== 'user') { waitUntil = 0; if (!open && +m.id > seenId) unread++; }
+          if (loaded || open) add(m.sender, m.text);
+        });
+        if (open) { seenId = last; set('kplc_seen', String(last)); unread = 0; }
+        typing.style.display = Date.now() < waitUntil ? 'block' : 'none';
+        showBadge();
+      }).catch(function () {});
+  }
+  function schedule() {
+    clearTimeout(timer);
+    var delay = open ? 2500 : (get('kplc_active') ? 15000 : 0);
+    if (delay) timer = setTimeout(function () { poll().then(schedule); }, delay);
+  }
+  function fit() {
+    if (window.innerWidth > 480 || !open) { panel.style.top = ''; panel.style.height = ''; panel.style.bottom = ''; btn.classList.remove('kb-hide'); return; }
+    var vv = window.visualViewport, vh = vv ? vv.height : window.innerHeight, top = vv ? vv.offsetTop : 0;
+    var kb = !!vv && vv.height < window.innerHeight * 0.78;
+    var h = kb ? vh - 12 : Math.min(vh - 160, 460);
+    panel.style.bottom = 'auto'; panel.style.height = h + 'px';
+    panel.style.top = (kb ? top + 6 : top + vh - h - 146) + 'px';
+    btn.classList.toggle('kb-hide', kb);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  if (window.visualViewport) { visualViewport.addEventListener('resize', fit); visualViewport.addEventListener('scroll', fit); }
+  window.addEventListener('resize', fit);
+  function loadHints() {
+    fetch(API + '/hints', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+      var box = $('kplc-hints'); box.innerHTML = '';
+      (list || []).slice(0, 3).forEach(function (q) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'kplc-h'; b.textContent = q;
+        b.addEventListener('click', function () { input.value = q; $('kplc-form').dispatchEvent(new Event('submit', { cancelable: true })); });
+        box.appendChild(b);
+      });
+      syncHints();
+    }).catch(function () {});
+  }
+  function openChat() {
+    open = true; panel.classList.add('open'); fit(); unread = 0; showBadge();
+    loadHints();
+    if (!loaded) {
+      loaded = true; last = 0;
+      add('bot', 'Здравствуйте! 👋 Меня зовут Кеплер. Задайте вопрос — отвечу сразу, а если не смогу, подключу специалиста.');
+      poll().then(schedule);
+    } else { poll().then(schedule); }
+    setTimeout(function () { input.focus(); }, 50);
+  }
+  function closeChat() { open = false; panel.classList.remove('open'); fit(); schedule(); }
+
+  btn.addEventListener('click', function () { open ? closeChat() : openChat(); });
+  $('kplc-x').addEventListener('click', closeChat);
+  $('kplc-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = input.value.trim(); if (!text) return;
+    set('kplc_nohints', '1'); input.value = ''; syncHints(); set('kplc_active', '1');
+    fetch(API + '/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sid: sid, text: text }) })
+      .then(function (r) {
+        if (!r.ok) { add('bot', r.status === 429 ? 'Слишком много сообщений. Подождите несколько минут.' : 'Не удалось отправить сообщение. Попробуйте ещё раз.'); return; }
+        waitUntil = Date.now() + 15000; return poll();
+      }).catch(function () { add('bot', 'Нет связи. Проверьте интернет и попробуйте ещё раз.'); });
+  });
+  function syncHints() { var h = $('kplc-hints'); if (!h) return;
+    if (input.value.trim()) set('kplc_nohints', '1');
+    h.classList.toggle('kplc-hide', !!get('kplc_nohints')); }
+  input.addEventListener('input', syncHints);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('kplc-form').dispatchEvent(new Event('submit', { cancelable: true })); }
+  });
+  if (get('kplc_active')) { loaded = false; poll().then(schedule); }
+})();
+</script>

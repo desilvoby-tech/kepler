@@ -321,6 +321,14 @@ def nav_html():
     return items
 
 
+def chat_widget():
+    """Окно онлайн-чата (бот @Kepler_ai_bot через API WordPress /?rest_route=/kpl/v1). Только на боевом домене."""
+    f = os.path.join(ROOT, 'assets', 'kplc-widget.html')
+    if S.get('chat') and BASE == S['domain'] and os.path.exists(f):
+        return open(f, encoding='utf-8').read()
+    return ''
+
+
 def layout(p, body, title, desc, trail):
     canon = abs_url(p['path'])
     bc = ''
@@ -364,9 +372,9 @@ def layout(p, body, title, desc, trail):
 </div><div class="wrap legal">© {datetime.date.today().year} «Кеплер». {esc(S["legal"])}. Информация на сайте не является публичной офертой.</div></footer>
 <div class="mbar"><a href="tel:{S["phone"]}" data-goal="click_phone">Позвонить</a><a href="{S["viber"]}" data-goal="click_viber">Viber</a>{f'<a href="{S["telegram"]}" data-goal="click_telegram">Telegram</a>' if S.get("telegram") else ''}<button data-open-form>Заявка</button></div>
 <dialog class="modal" data-modal><button class="x" data-close aria-label="Закрыть">×</button>{form_html("Узнайте цену и срок ремонта", "Перезвоним за 5 минут в рабочее время (9:00–21:00).")}</dialog>
-<script>window.KEPLER={{form:"https://formsubmit.co/ajax/{S["form_email"]}",ym:"{S.get("yandex_metrika", "")}"}};</script>
+<script>window.KEPLER={{form:"/?rest_route=/kpl/v1/send",ym:"{S.get("yandex_metrika", "")}"}};</script>
 <script src="/assets/app.js" defer></script>
-</body></html>'''
+{chat_widget()}</body></html>'''
 
 
 def render_page(p):
