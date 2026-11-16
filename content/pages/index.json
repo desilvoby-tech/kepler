@@ -37,7 +37,8 @@
      "label": "Время ремонта",
      "value": "от 5 мин."
     }
-   ]
+   ],
+   "image": "https://kepler.by/wp-content/uploads/2025/12/bigappliance-9fd699ec127e16e15f5510350461c8f3-2-1.webp"
   },
   {
    "type": "services",
@@ -52,7 +53,9 @@
       "долго загружается"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/a263854299ad397e75ea1363a53f0797-1.webp",
+     "wide": true
     },
     {
      "title": "Компьютеры",
@@ -64,7 +67,9 @@
       "перегревается"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/novyj-proekt-66-1.webp",
+     "wide": false
     },
     {
      "title": "Мобильные телефоны",
@@ -74,7 +79,9 @@
       "не заряжает"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/novyj-proekt-67-2.webp",
+     "wide": false
     },
     {
      "title": "Принтеры",
@@ -85,7 +92,9 @@
       "Ошибка на принтере"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/i-19-2-1.webp",
+     "wide": false
     },
     {
      "title": "Мониторы",
@@ -96,7 +105,9 @@
       "Мигает"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/monitor-1.webp",
+     "wide": false
     },
     {
      "title": "Телевизоры",
@@ -107,7 +118,9 @@
       "виснет"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/d8c30da557c8656c4b5424cb8776e884-1.webp",
+     "wide": true
     },
     {
      "title": "Кофемашины",
@@ -119,7 +132,9 @@
       "выдает ошибку"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/8.webp",
+     "wide": true
     },
     {
      "title": "Посудомоечные машины",
@@ -131,7 +146,9 @@
       "шумит"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/pngegg-4.png-1.webp",
+     "wide": false
     },
     {
      "title": "Мелкая бытовая техника",
@@ -142,32 +159,22 @@
       "утюги"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/3-1.webp",
+     "wide": false
     },
     {
      "title": "Варочные панели",
      "price": "ОТ 15 BYN",
-     "points": [],
+     "points": [
+      "не работает: конфорка",
+      "не работает: проводка"
+     ],
      "desc": "",
-     "image": ""
-    }
-   ],
-   "title": "Что мы ремонтируем?"
-  },
-  {
-   "type": "text",
-   "html": "не работает:"
-  },
-  {
-   "type": "list",
-   "items": [
-    "конфорка",
-    "проводка"
-   ]
-  },
-  {
-   "type": "services",
-   "items": [
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/4-1.webp",
+     "wide": false
+    },
     {
      "title": "Духовые шкафы",
      "price": "ОТ 19 BYN",
@@ -177,7 +184,9 @@
       "сломан датчик"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/5-1.webp",
+     "wide": false
     },
     {
      "title": "Холодильники",
@@ -188,7 +197,9 @@
       "щелкает"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/2-1.webp",
+     "wide": false
     },
     {
      "title": "Стиральные машины",
@@ -199,9 +210,12 @@
       "Протекает"
      ],
      "desc": "",
-     "image": ""
+     "image": "",
+     "photo": "https://kepler.by/wp-content/uploads/2025/12/1-2-1.webp",
+     "wide": true
     }
-   ]
+   ],
+   "title": "Что мы ремонтируем?"
   },
   {
    "type": "problems",
@@ -1242,7 +1256,8 @@
   {
    "type": "form",
    "title": "Закажите ремонт техники со скидкой в 15%",
-   "subtitle": "Ремонт любой техники в Гомеле — быстро, качественно, с гарантией."
+   "subtitle": "Ремонт любой техники в Гомеле — быстро, качественно, с гарантией.",
+   "photo": "https://kepler.by/wp-content/uploads/2025/12/b5fb883de6b056bd94c8c13a286e2c17-1.webp"
   },
   {
    "type": "reviews",

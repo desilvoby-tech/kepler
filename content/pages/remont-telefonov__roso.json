@@ -36,7 +36,8 @@
      "label": "Время ремонта",
      "value": "от 5 мин."
     }
-   ]
+   ],
+   "image": "https://kepler.by/wp-content/uploads/2025/12/novyj-proekt-67-2.webp"
   },
   {
    "type": "problems",
@@ -190,7 +191,8 @@
   {
    "type": "form",
    "title": "Закажите ремонт телефонов Poco со скидкой в 15%",
-   "subtitle": "Ремонт телефонов Poco любой сложности в Гомеле. Лучшие цены, гарантия."
+   "subtitle": "Ремонт телефонов Poco любой сложности в Гомеле. Лучшие цены, гарантия.",
+   "photo": "https://kepler.by/wp-content/uploads/2025/12/b5fb883de6b056bd94c8c13a286e2c17-1.webp"
   },
   {
    "type": "seo_text",
