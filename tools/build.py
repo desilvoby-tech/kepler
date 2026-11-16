@@ -493,12 +493,17 @@ def main():
                  for u, d, p in sorted(urls, key=lambda x: x[0]) if not p.get('noindex'))
     open(os.path.join(DIST, 'sitemap.xml'), 'w', encoding='utf-8').write(
         f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>')
+    shutil.copy(os.path.join(DIST, 'sitemap.xml'), os.path.join(DIST, 'sitemap_index.xml'))  # старый адрес Yoast
     if BASE != S['domain']:  # тестовая копия не индексируется
         open(os.path.join(DIST, 'robots.txt'), 'w').write('User-agent: *\nDisallow: /\n')
     else:
         open(os.path.join(DIST, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n')
     if os.path.exists(os.path.join(ROOT, 'CNAME')):
         shutil.copy(os.path.join(ROOT, 'CNAME'), os.path.join(DIST, 'CNAME'))
+    st = os.path.join(ROOT, 'static')  # файлы подтверждения Google/Яндекс, llms.txt
+    if os.path.isdir(st):
+        for fn in os.listdir(st):
+            shutil.copy(os.path.join(st, fn), os.path.join(DIST, fn))
     open(os.path.join(DIST, '.nojekyll'), 'w').write('')
     print('страниц:', len(urls), '→', DIST)
 
