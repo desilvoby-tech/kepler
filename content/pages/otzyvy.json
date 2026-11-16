@@ -1,0 +1,22 @@
+{
+ "id": 4492,
+ "type": "page",
+ "path": "/otzyvy/",
+ "title": "Отзывы Кеплер в Гомеле",
+ "seo": {
+  "title": "Отзывы Кеплер в Гомеле - Ремонт техники в Гомеле KEPLER",
+  "description": "Отзывы сервисного центра Кеплер в Гомеле. Более 100 отзывов на различные услуги по ремонту и обслуживанию компьютерной и бытовой техники.",
+  "canonical": "https://kepler.by/otzyvy/",
+  "robots": {
+   "index": "index",
+   "follow": "follow",
+   "max-snippet": "max-snippet:-1",
+   "max-image-preview": "max-image-preview:large",
+   "max-video-preview": "max-video-preview:-1"
+  }
+ },
+ "date": "2025-10-06T01:21:17",
+ "modified": "2026-04-13T12:28:17",
+ "parent": 0,
+ "blocks": []
+}

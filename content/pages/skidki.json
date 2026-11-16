@@ -1,0 +1,104 @@
+{
+ "id": 4685,
+ "type": "page",
+ "path": "/skidki/",
+ "title": "Скидки и акции",
+ "seo": {
+  "title": "Скидки и акции - Kepler",
+  "description": "Скидки и акции сервисного центра Kepler в Гомеле: выгодный ремонт компьютеров, ноутбуков, телефонов и бытовой техники.",
+  "canonical": "https://kepler.by/skidki/",
+  "og_image": "https://kepler.by/wp-content/uploads/2025/04/laptop.png",
+  "robots": {
+   "index": "index",
+   "follow": "follow",
+   "max-snippet": "max-snippet:-1",
+   "max-image-preview": "max-image-preview:large",
+   "max-video-preview": "max-video-preview:-1"
+  }
+ },
+ "date": "2025-10-07T17:40:00",
+ "modified": "2025-10-07T18:14:32",
+ "parent": 0,
+ "blocks": [
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Хотите сэкономить на ремонте техники? Всё просто:"
+  },
+  {
+   "type": "text",
+   "html": "<p><strong>оставьте заявку на ремонт, подключение или настройку через сайт — и получите скидку 15%!</strong></p><p>Эта скидка действует на все услуги, даже если вы привозите технику в нашу мастерскую. Для нас это способ заранее подготовиться к вашему визиту и запланировать работу, а для вас — реальная экономия.</p><p><b>Как это работает</b>:</p>"
+  },
+  {
+   "type": "text",
+   "html": "<ul><li>оставляете заявку онлайн;</li><li>если нужен выезд мастера — обсудим и уточним детали;</li><li>если планируете ремонт в мастерской — просто приезжайте, и при визите напомните о своей заявке.</li></ul>"
+  },
+  {
+   "type": "form",
+   "title": "Приятный бонус: скидка суммируется с нашими сезонными акциями.",
+   "subtitle": ""
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Скидки и акции:"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Ремонт ноутбуков"
+  },
+  {
+   "type": "image",
+   "src": "https://kepler.by/wp-content/uploads/2025/04/laptop.png",
+   "alt": "Ремонт техники ноутбуков в Гомеле"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Скидка 7%"
+  },
+  {
+   "type": "text",
+   "html": "<p><b>Скидка </b>действует до<b> 31.12.25</b></p>"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Ремонт компьютеров"
+  },
+  {
+   "type": "image",
+   "src": "https://kepler.by/wp-content/uploads/2025/04/free-icon-pc-13338581.webp",
+   "alt": "ремонт техники компьютеров в гомеле"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Скидка 5%"
+  },
+  {
+   "type": "text",
+   "html": "<p><b>Скидка </b>действует до<b> 31.11.25</b></p>"
+  },
+  {
+   "type": "heading",
+   "level": 3,
+   "text": "Ремонт телефонов"
+  },
+  {
+   "type": "image",
+   "src": "https://kepler.by/wp-content/uploads/2025/04/smartphone.png",
+   "alt": "Ремонт техники телефонов в Гомеле"
+  },
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Скидка 5%"
+  },
+  {
+   "type": "text",
+   "html": "<p><b>Скидка </b>действует до<b> 31.11.25</b></p>"
+  }
+ ]
+}

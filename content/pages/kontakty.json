@@ -1,0 +1,77 @@
+{
+ "id": 15,
+ "type": "page",
+ "path": "/kontakty/",
+ "title": "Контакты",
+ "seo": {
+  "title": "Контакты - Ремонт техники в Гомеле KEPLER",
+  "description": "Контакты сервисного центра Кеплер в Гомеле. Ремонт компьютеров, ноутбуков, телефонов, стиральных машин и любой другой бытовой электроники.",
+  "canonical": "https://kepler.by/kontakty/",
+  "robots": {
+   "index": "index",
+   "follow": "follow",
+   "max-snippet": "max-snippet:-1",
+   "max-image-preview": "max-image-preview:large",
+   "max-video-preview": "max-video-preview:-1"
+  }
+ },
+ "date": "2023-02-27T14:42:34",
+ "modified": "2026-02-11T17:26:21",
+ "parent": 0,
+ "blocks": [
+  {
+   "type": "heading",
+   "level": 2,
+   "text": "Контакты"
+  },
+  {
+   "type": "list",
+   "items": [
+    "Адрес:"
+   ]
+  },
+  {
+   "type": "text",
+   "html": "г. Гомель, ул. Рогачевская 13"
+  },
+  {
+   "type": "list",
+   "items": [
+    "Телефон:"
+   ]
+  },
+  {
+   "type": "text",
+   "html": "+375 (29) 321-33-33"
+  },
+  {
+   "type": "list",
+   "items": [
+    "E-mail:"
+   ]
+  },
+  {
+   "type": "text",
+   "html": "vtop100k@gmail.com"
+  },
+  {
+   "type": "list",
+   "items": [
+    "Время работы:"
+   ]
+  },
+  {
+   "type": "text",
+   "html": "<p>Пн–Вс: 09:00–21:00 <strong>Курьер</strong><br/>Пн–Вс: 10:00–21:00 <strong>Постамат</strong><br/>Пн–Пт: 10:00–18:30 <strong>Сервисный центр</strong><br/>Сб-Вс: 10:00–16:00</p>"
+  },
+  {
+   "type": "text",
+   "html": "Хотите уточнить детали или заказать ремонт? Оставьте свои контакты, и мы перезвоним."
+  },
+  {
+   "type": "form",
+   "title": "",
+   "subtitle": ""
+  }
+ ]
+}
