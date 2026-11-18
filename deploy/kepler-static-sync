@@ -1,0 +1,23 @@
+#!/bin/bash
+# Автовыкладка kepler.by: каждые 5 минут (cron /etc/cron.d/kepler-static) берёт main из GitHub,
+# собирает статическую копию WordPress (tools/mirror.py) и подменяет /var/www/kepler-static.
+# Ставится так: install -m755 deploy/kepler-static-sync /usr/local/bin/kepler-static-sync
+# ВАЖНО: папка сайта подменяется целиком — всё, что положено на сервер руками, пропадёт.
+# Любые правки (в том числе оформление чата assets/kplc-mobile.*) — только через репозиторий.
+exec 9>/tmp/kepler-static.lock; flock -n 9 || exit 0
+SRC=/opt/kepler-static-src; OUT=/var/www/kepler-static
+[ -d $SRC/.git ] || git clone -q --depth 1 https://github.com/desilvoby-tech/kepler $SRC || exit 1
+cd $SRC && git fetch -q --depth 1 origin main && git reset -q --hard origin/main || exit 1
+REV=$(git rev-parse HEAD)
+[ "$REV" = "$(cat $OUT/.rev 2>/dev/null)" ] && [ "${1:-}" != "--force" ] && exit 0
+rm -rf $OUT.new
+python3 tools/mirror.py --out $OUT.new >/tmp/kepler-static-build.log 2>&1 || { echo "$(date -Is) BUILD FAILED $REV"; cat /tmp/kepler-static-build.log; exit 1; }
+[ -s $OUT.new/index.html ] || { echo "no index.html"; exit 1; }
+# оформление чата обязано быть на месте — иначе не выкладываем
+for f in assets/kplc-mobile.css assets/kplc-mobile.js; do
+  [ -s $OUT.new/$f ] || { echo "$(date -Is) NO $f — не выкладываю $REV"; exit 1; }
+done
+grep -q 'kplc-mobile.css' $OUT.new/index.html || { echo "$(date -Is) index.html без kplc-mobile.css — не выкладываю $REV"; exit 1; }
+echo $REV > $OUT.new/.rev; chown -R www-data:www-data $OUT.new
+rm -rf $OUT.old; [ -d $OUT ] && mv $OUT $OUT.old; mv $OUT.new $OUT
+echo "$(date -Is) deployed $REV"
