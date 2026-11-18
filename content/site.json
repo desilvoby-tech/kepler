@@ -192,5 +192,32 @@
    "url": "/remont-telefonov/zte/"
   }
  ],
- "chat": true
+ "chat": true,
+ "og_image": "/wp-content/uploads/2025/04/bigappliance-9fd699ec127e16e15f5510350461c8f3-2.webp",
+ "verification": {
+  "yandex-verification": "46e0127393bf11cb",
+  "verification": "f612c7d25f5690ad41496fcfdbf8d1"
+ },
+ "redirects": {
+  "/tag/вирусы/": "/kompyuternaya-pomoshh/udalenie-virusov/",
+  "/tag/диагностика-компьютеров/": "/remont-kompyuterov/",
+  "/tag/компьютер-не-включается/": "/vse-stati/kompyuter-ne-vklyuchaetsya-ishchem-i-ustranyaem-prichinu/",
+  "/tag/настройка-компьютеров/": "/kompyuternaya-pomoshh/",
+  "/tag/ремонт-компьютеров/": "/remont-kompyuterov/",
+  "/tag/ускорение-компьютера/": "/vse-stati/kak-uskorit-noutbuk-i-sekonomit-pochemu-apgrejd-vygodnee/",
+  "/category/компьютерная-помощь/": "/kompyuternaya-pomoshh/",
+  "/author/kandix/": "/category/vse-stati/",
+  "/2025/12/23/": "/category/vse-stati/",
+  "/2025/12/25/": "/category/vse-stati/",
+  "/2025/12/": "/category/vse-stati/",
+  "/2025/": "/category/vse-stati/",
+  "/feed/": "/category/vse-stati/",
+  "/ecran1.html": "/remont-noutbukov/",
+  "/hdd.html": "/remont-noutbukov/",
+  "/klavnew.html": "/remont-noutbukov/",
+  "/kompnew.html": "/remont-kompyuterov/",
+  "/korpuss.html": "/remont-kompyuterov/",
+  "/virusnew.html": "/kompyuternaya-pomoshh/udalenie-virusov/",
+  "/vosstanovlenienew.html": "/remont-kompyuterov/"
+ }
 }
