@@ -22,5 +22,7 @@
 ## Как устроен сайт
 - Сайт — статическая копия WordPress 1:1: `src/wpmirror` (выгрузка, `tools/wp_fetch.py`,
   workflow `mirror-wp`) → `tools/mirror.py` → `dist/`.
-- Формы Elementor отправляет `assets/kepler-forms.js` (заявка уходит боту через `/?rest_route=/kpl/v1/send`).
+- Формы Elementor отправляет `assets/kepler-forms.js`: текст «📝 Заявка с сайта …» через `/?rest_route=/kpl/v1/send`.
+  Бот (репозиторий kepler-bot, `handle_web_form`) по этому началу создаёт заявку в ServisKC и карточку операторам.
+  Начало текста не менять без правки бота.
 - Старые адреса WordPress → `content/site.json` → `redirects`; 301 для nginx — `deploy/nginx-redirects.conf`.
