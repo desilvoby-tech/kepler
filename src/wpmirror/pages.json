@@ -243,5 +243,10 @@
   "path": "/category/vse-stati/",
   "src": "https://kepler.by/index.php?category_name=vse-stati",
   "modified": ""
+ },
+ {
+  "path": "/category/vse-stati/page/2/",
+  "src": "https://kepler.by/index.php?category_name=vse-stati&paged=2",
+  "modified": ""
  }
 ]
