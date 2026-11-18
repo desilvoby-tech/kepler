@@ -1,0 +1,1 @@
+/category/vse-stati/page/2/	/index.php?category_name=vse-stati&paged=2

@@ -41,6 +41,7 @@ DROP_HEAD = [
     r'<link rel="EditURI"[^>]*>\s*',
     r'<meta name="generator"[^>]*>\s*',
     r"<link rel='shortlink'[^>]*>\s*",
+    r'<link rel="pingback"[^>]*>\s*',
 ]
 DROP_SCRIPTS = ['cfturnstile-js-before', 'cfturnstile-js', 'cfturnstile-elementor-forms-js-extra',
                 'cfturnstile-elementor-forms-js']
@@ -67,6 +68,11 @@ def process(h):
     for sid in DROP_SCRIPTS:
         h = re.sub(r'<script[^>]*id="' + re.escape(sid) + r'"[^>]*>.*?</script>\s*', '', h, flags=re.S)
     h = re.sub(r'<div[^>]*class="[^"]*cf-turnstile[^"]*"[^>]*>\s*</div>', '', h)
+    # постраничная навигация рубрики: WordPress отдал её от запроса ?category_name=…
+    h = re.sub(r'https://kepler\.by/page/(\d+)/\?category_name=vse-stati', r'https://kepler.by/category/vse-stati/page/\1/', h)
+    h = h.replace('https://kepler.by/?category_name=vse-stati', 'https://kepler.by/category/vse-stati/')
+    for d in re.findall(r'https://kepler\.by(/20\d\d/\d\d/\d\d/)', h):  # ссылки «дата записи» → архивов нет
+        DATE_LINKS.add(d)
     if TEST:
         h = re.sub(r"<meta name='robots' content='[^']*' />", '', h)
         h = h.replace('<meta charset="UTF-8">', '<meta charset="UTF-8"><meta name="robots" content="noindex, nofollow">', 1)
@@ -84,8 +90,14 @@ def write(path, content):
         f.write(content)
 
 
+DATE_LINKS = set()
+
+
 def redirects():
-    for old, new in S.get('redirects', {}).items():
+    extra = {}
+    for d in DATE_LINKS:
+        extra[d] = extra[d[:9]] = extra[d[:6]] = '/category/vse-stati/'
+    for old, new in {**extra, **S.get('redirects', {})}.items():
         fp = os.path.join(DIST, old.strip('/')) if old.endswith('.html') else os.path.join(DIST, old.strip('/'), 'index.html')
         if os.path.exists(fp):
             continue
@@ -123,7 +135,7 @@ def main():
         h = open(os.path.join(SRC, 'html', p['path'].strip('/'), 'index.html'), encoding='utf-8').read()
         out = process(h)
         write(p['path'], out)
-        if not re.search(r"<meta name='robots' content='noindex", h):
+        if not re.search(r"<meta name='robots' content='noindex", h) and '/page/' not in p['path']:
             sm.append((p['path'], (p.get('modified') or '')[:10] or datetime.date.today().isoformat()))
     p404 = os.path.join(SRC, 'html', '404.html')
     if os.path.exists(p404):

@@ -8,9 +8,10 @@
   function goal(n) { try { window.ym && ym(YM, 'reachGoal', n); } catch (e) {} }
 
   function label(f, el) {
+    if (el.type === 'tel') return 'Телефон';
     var l = el.id && f.querySelector('label[for="' + el.id + '"]');
     var t = (l && l.textContent) || el.getAttribute('placeholder') || el.name || '';
-    return t.replace(/\s+/g, ' ').trim();
+    return t.replace(/\s+/g, ' ').trim().replace(/:$/, '');
   }
 
   function message(f, ok, text) {
@@ -33,6 +34,7 @@
       if (el.type === 'hidden' || el.type === 'submit' || el.type === 'button' || !el.name) return;
       if ((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
       var v = (el.value || '').trim(); if (!v) return;
+      if (el.tagName === 'SELECT' && el.selectedIndex === 0 && v === label(f, el)) return;
       if (el.type === 'tel' && v.replace(/\D/g, '').length < 12) phoneOk = false;
       lines.push(label(f, el) + ': ' + v);
     });
