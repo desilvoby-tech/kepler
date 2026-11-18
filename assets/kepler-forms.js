@@ -46,7 +46,9 @@
     var btn = f.querySelector('[type=submit]');
     f.classList.add('elementor-form-waiting'); if (btn) btn.disabled = true;
     var sid = (Math.random().toString(36) + Math.random().toString(36) + Date.now().toString(36)).replace(/[^a-z0-9]/g, '').slice(0, 24);
-    var text = '📝 Заявка с сайта' + (f.getAttribute('name') ? ' («' + f.getAttribute('name') + '»)' : '') + '\n' +
+    var fname = f.getAttribute('name') || '';
+    if (fname.indexOf('@') >= 0) fname = '';  // в некоторых формах WordPress вместо названия стоит почта
+    var text = '📝 Заявка с сайта' + (fname ? ' («' + fname + '»)' : '') + '\n' +
                lines.join('\n') + '\nСтраница: ' + location.href;
     fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sid: sid, text: text }) })
       .then(function (r) { if (!r.ok) throw new Error(r.status);
