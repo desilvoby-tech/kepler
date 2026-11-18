@@ -1,0 +1,29 @@
+# Сверка статической копии с оригиналом WordPress (tools/compare.py). Отчёт — src/wpmirror/compare/.
+name: compare
+on:
+  workflow_dispatch:
+  push:
+    branches: [wp-mirror]
+    paths: ['tools/compare.py', 'tools/mirror.py', 'assets/kepler-forms.js', '.github/workflows/compare.yml']
+permissions:
+  contents: write
+concurrency:
+  group: compare
+  cancel-in-progress: true
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright==1.48.0 pillow && python -m playwright install --with-deps chromium
+      - run: python tools/mirror.py --base http://localhost:8765 --out /tmp/site
+      - run: (cd /tmp/site && nohup python -m http.server 8765 >/dev/null 2>&1 &) && sleep 2 && rm -rf src/wpmirror/compare && python tools/compare.py
+      - name: Сохранить отчёт
+        run: |
+          git config user.name "github-actions"; git config user.email "github-actions@users.noreply.github.com"
+          git pull --rebase -q || true
+          git add src/wpmirror/compare && (git commit -m "Сверка копии с WordPress" && git push) || echo "нет изменений"
