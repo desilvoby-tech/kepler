@@ -133,14 +133,17 @@ async def browse(tlist):
                 page = await ctx.new_page()
                 doc_url = H + quote(path)
 
-                async def handle(route, html=html, doc_url=doc_url):
-                    if route.request.resource_type == 'document' and route.request.url.split('#')[0] in (doc_url, doc_url.lower()):
-                        await route.fulfill(status=200, content_type='text/html; charset=utf-8', body=html)
-                    else:
-                        await route.continue_()
-                await page.route('**/*', handle)
+                def make(html, doc_url):
+                    async def handle(route, request):
+                        if request.resource_type == 'document' and request.url.split('#')[0].lower() == doc_url.lower():
+                            await route.fulfill(status=200, content_type='text/html; charset=utf-8', body=html)
+                        else:
+                            await route.continue_()
+                    return handle
+                await page.route('**/*', make(html, doc_url))
                 page.on('request', lambda r: seen.add(r.url))
                 try:
+                    page.set_default_timeout(60000)
                     await page.goto(doc_url, wait_until='networkidle', timeout=90000)
                 except Exception as e:
                     print('goto', path, e)
@@ -176,8 +179,6 @@ def main():
             meta.append({'path': path, 'src': src, 'modified': mod})
     st, b = req(H + '/net-takoj-stranicy-kepler/')
     save('html/404.html', b)
-    for f in ('sitemap_index.xml', 'page-sitemap.xml', 'post-sitemap.xml', 'category-sitemap.xml'):
-        st, b = req(f'{H}/index.php?sitemap={f.split("-")[0].replace(".xml", "")}' if False else f'{H}/{f}')
     json.dump(meta, open(os.path.join(OUT, 'pages.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     for m in meta:
         html_deps(open(os.path.join(OUT, 'html', m['path'].strip('/'), 'index.html'), encoding='utf-8').read())
