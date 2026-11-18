@@ -1,0 +1,26 @@
+# Докачать отдельные файлы с kepler.by в src/wpmirror/files (список — tools/extra-files.txt).
+name: fetch-files
+on:
+  workflow_dispatch:
+  push:
+    branches: [wp-mirror]
+    paths: ['tools/extra-files.txt', 'tools/extra-pages.txt']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          while read -r p; do
+            [ -z "$p" ] && continue
+            mkdir -p "src/wpmirror/files$(dirname "$p")"
+            curl -sfL -A "Mozilla/5.0" "https://kepler.by$p" -o "src/wpmirror/files$p" && echo "ok $p"
+          done < tools/extra-files.txt
+          python3 tools/wp_fetch_extra.py
+          git config user.name "github-actions"; git config user.email "github-actions@users.noreply.github.com"
+          git add -f src/wpmirror/files src/wpmirror/html src/wpmirror/pages.json && (git commit -m "Докачаны файлы WordPress" && git push) || echo "нет изменений"

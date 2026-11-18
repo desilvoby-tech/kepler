@@ -1,0 +1,32 @@
+/* Kepler: чат в цвет кнопки, низкая шапка, одинаковый вид на телефонах */
+html body #kplc-panel{--kg:#3a9a35;--kgd:#2f8a2b}
+/* шапка: цвет кнопки, ниже */
+html body #kplc-head{background:#3a9a35!important;padding:7px 12px!important;min-height:0!important;gap:8px!important}
+html body #kplc-head .t{font-size:15px!important;line-height:1.2!important}
+html body #kplc-head .s{font-size:12px!important;line-height:1.2!important;opacity:.85!important}
+html body #kplc-x{font-size:22px!important;line-height:1!important;padding:0 2px!important}
+/* сообщения и элементы в зелёных тонах */
+html body #kplc-panel .kplc-m.user{background:#3a9a35!important;color:#fff!important}
+html body #kplc-panel .kplc-h{background:#fff!important;color:#2f8a2b!important;border:1.5px solid #3a9a35!important}
+html body #kplc-send:hover{background:#3a9a35!important;color:#fff!important}
+html body #kplc-foot a{color:#2f8a2b!important}
+/* на телефонах «hover» залипает после касания — не перекрашиваем подсказки */
+@media (hover:hover){html body #kplc-panel .kplc-h:hover{background:#3a9a35!important;color:#fff!important}}
+@media (hover:none){html body #kplc-panel .kplc-h:hover,html body #kplc-panel .kplc-h:active{background:#fff!important;color:#2f8a2b!important}}
+/* телефон: окно-шторка с отступами, высоту и положение задаёт скрипт ниже */
+@media (max-width:480px){
+  html body #kplc-panel{left:8px!important;right:8px!important;width:auto!important;bottom:auto!important;
+    border-radius:14px!important;max-height:none!important;-webkit-text-size-adjust:100%!important;text-size-adjust:100%!important}
+  html body #kplc-panel,html body #kplc-panel *{font-family:Arial,Helvetica,sans-serif!important}
+  html body #kplc-in{font-size:16px!important} /* 16px — iOS/Яндекс не зумят страницу при вводе */
+}
+
+/* v2: белая шапка + зелёная мягко светящаяся окантовка окна */
+html body #kplc-panel{border:1.5px solid #3a9a35!important;
+  box-shadow:0 0 0 3px rgba(58,154,53,.14),0 0 18px rgba(58,154,53,.35),0 10px 30px rgba(0,0,0,.18)!important}
+html body #kplc-head{background:#fff!important;color:#1d2b1d!important;border-bottom:1px solid rgba(58,154,53,.25)!important}
+html body #kplc-head .t{color:#1d2b1d!important}
+html body #kplc-head .s{color:#2f8a2b!important;opacity:1!important}
+html body #kplc-head .dot{background:#3a9a35!important;box-shadow:0 0 6px rgba(58,154,53,.8)!important}
+html body #kplc-x{color:#6b7a6b!important}
+html body #kplc-x:hover{color:#2f8a2b!important}

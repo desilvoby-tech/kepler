@@ -39,6 +39,20 @@ def load_pages():
 PAGES = load_pages()
 
 
+def is_noindex(p):
+    """noindex из WordPress (Yoast) сохраняется: пользовательское соглашение, дубли статей."""
+    return bool(p.get('noindex') or ((p.get('seo') or {}).get('robots') or {}).get('index') == 'noindex')
+
+
+def page_image(p):
+    """Картинка для соцсетей и schema: своя из Yoast, иначе фото из hero, иначе общая."""
+    img = (p.get('seo') or {}).get('og_image')
+    if not img:
+        img = next((b.get('image') for b in p.get('blocks', []) if b['type'] == 'hero' and b.get('image')), '')
+    img = img or S.get('og_image') or S['logo']
+    return img if img.startswith('http') else BASE + img
+
+
 def no_bang(s):
     return re.sub(r'\s*!+\s*$', '', s or '').strip()
 
@@ -84,7 +98,7 @@ def b_hero(b, p):
 def b_problems(b, p):
     cards = ''
     for c in b['items']:
-        img = f'<img src="{esc(c["image"])}" alt="" loading="lazy" width="44" height="44">' if c.get('image') else ''
+        img = f'<img src="{esc(c["image"])}" alt="{esc(c["title"])}" loading="lazy" width="44" height="44">' if c.get('image') else ''
         cards += f'''<div class="prob"><div class="prob-head"><h3>{esc(c["title"])}</h3>{img}</div>
 <div class="prob-body"><span class="lbl">Признак поломки</span><p>{esc(c["symptom"])}</p>
 <div class="prob-foot"><div><span class="lbl">Цена ремонта</span><b>{esc(c["price"])}</b></div>
@@ -101,7 +115,7 @@ def b_services(b, p):
         href = next((u for kk, u in links.items() if t.lower().rstrip('ы').rstrip('и')[:6] in kk), '')
         pts = ''.join(f'<li>{esc(x)}</li>' for x in c.get('points', []))
         photo = c.get('photo') or ''
-        icon = f'<img class="svc-ico" src="{esc(c["image"])}" alt="" loading="lazy" width="48" height="48">' if c.get('image') and not photo else ''
+        icon = f'<img class="svc-ico" src="{esc(c["image"])}" alt="{esc(t)}" loading="lazy" width="48" height="48">' if c.get('image') and not photo else ''
         ph = f'<img class="svc-photo" src="{esc(photo)}" alt="{esc(t)}" loading="lazy">' if photo else ''
         desc = f'<p>{esc(c["desc"])}</p>' if c.get('desc') else ''
         head = f'<a href="{url(href)}">{esc(t)}</a>' if href else esc(t)
@@ -158,7 +172,7 @@ def form_html(title='', subtitle='', compact=False):
 def b_form(b, p):
     if not b.get('title') and not b.get('subtitle'):
         return f'<div class="wrap">{inline_cta()}</div>'
-    ph = f'<img class="cta-photo" src="{esc(b["photo"])}" alt="" loading="lazy">' if b.get('photo') else ''
+    ph = f'<img class="cta-photo" src="{esc(b["photo"])}" alt="Мастер сервисного центра Кеплер в Гомеле" loading="lazy">' if b.get('photo') else ''
     return f'<section class="sec"><div class="wrap"><div class="cta-card{' has-photo' if ph else ''}">{form_html(b.get("title"), b.get("subtitle"))}{ph}</div></div></section>'
 
 
@@ -279,6 +293,10 @@ def crumbs(p):
 
 def schemas(p, trail):
     out = [org_schema()]
+    if p['path'] == '/':
+        out.append({"@context": "https://schema.org", "@type": "WebSite", "@id": BASE + "/#website", "url": BASE + "/",
+                    "name": "Кеплер — ремонт техники в Гомеле", "alternateName": "Kepler", "inLanguage": "ru-RU",
+                    "publisher": {"@id": BASE + "/#org"}})
     if p['path'] != '/':
         out.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, **({"item": abs_url(u)} if i < len(trail) - 1 else {})}
@@ -305,7 +323,7 @@ def schemas(p, trail):
         out.append({"@context": "https://schema.org", "@type": "Article", "headline": h1_of(p),
                     "datePublished": p.get('date'), "dateModified": p.get('modified'),
                     "author": {"@id": BASE + "/#org"}, "publisher": {"@id": BASE + "/#org"},
-                    "mainEntityOfPage": abs_url(p['path'])})
+                    "mainEntityOfPage": abs_url(p['path']), "image": page_image(p), "inLanguage": "ru-RU"})
     return ''.join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>' for x in out)
 
 
@@ -339,8 +357,13 @@ def layout(p, body, title, desc, trail):
     ym = ''
     if S.get('yandex_metrika'):
         ym = f'<script>(function(m,e,t,r,i,k,a){{m[i]=m[i]||function(){{(m[i].a=m[i].a||[]).push(arguments)}};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym({S["yandex_metrika"]},"init",{{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true}});</script>'
-    noindex = '<meta name="robots" content="noindex">' if (p.get('noindex') or BASE != S['domain']) else ''
-    og_img = (p.get('seo') or {}).get('og_image') or BASE + S['logo']
+    if is_noindex(p) or BASE != S['domain']:
+        noindex = '<meta name="robots" content="noindex, follow">'
+    else:
+        noindex = '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">'
+    og_img = page_image(p)
+    verify = ''.join(f'<meta name="{k}" content="{esc(v)}">' for k, v in (S.get('verification') or {}).items() if v)
+    modified = f'<meta property="article:modified_time" content="{esc(p["modified"])}">' if p.get('modified') else ''
     foot_links = ''.join(f'<li><a href="{url(x["url"])}">{esc(x["title"])}</a></li>' for x in S['footer_links'])
     svc_links = ''.join(f'<li><a href="{url(c["url"])}">{esc(c["title"])}</a></li>' for c in S['nav'][0]['children'])
     return f'''<!doctype html>
@@ -351,7 +374,8 @@ def layout(p, body, title, desc, trail):
 <link rel="canonical" href="{canon}">
 <meta property="og:type" content="{'article' if p['type'] == 'post' else 'website'}"><meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{canon}">
-<meta property="og:image" content="{esc(og_img)}"><meta property="og:locale" content="ru_RU"><meta property="og:site_name" content="Кеплер">
+<meta property="og:image" content="{esc(og_img)}"><meta property="og:locale" content="ru_RU"><meta property="og:site_name" content="Кеплер">{modified}
+<meta name="twitter:card" content="summary_large_image">{verify}
 <link rel="icon" href="https://kepler.by/wp-content/uploads/2026/04/cropped-%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF3-32x32.jpg" sizes="32x32"><link rel="apple-touch-icon" href="https://kepler.by/wp-content/uploads/2026/04/cropped-%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF3-180x180.jpg">
 <link rel="stylesheet" href="/assets/style.css">
 {schemas(p, trail)}{ym}
@@ -458,7 +482,10 @@ HAS_LOCAL_IMG = os.path.isdir(os.path.join(ROOT, 'wp-content'))
 def localize(h):
     """Картинки WordPress лежат в репозитории по тем же путям: /wp-content/uploads/…"""
     if HAS_LOCAL_IMG:
-        h = h.replace('https://kepler.by/wp-content/uploads/', '/wp-content/uploads/')
+        # только в src/href/srcset/url(): og:image и schema.org должны остаться полными адресами
+        h = re.sub(r'((?:src|href|srcset)="|url\(["\']?|, )https://kepler\.by(/wp-content/uploads/)', r'\1\2', h)
+        if BASE != S['domain']:
+            h = h.replace('content="https://kepler.by/wp-content/uploads/', f'content="{BASE}/wp-content/uploads/')
     else:
         h = h.replace('"/assets/logo.png"', '"https://kepler.by/wp-content/uploads/2023/03/logo.png"')
     return h
@@ -472,6 +499,30 @@ def write(path, content):
     os.makedirs(d, exist_ok=True)
     with open(os.path.join(d, 'index.html'), 'w', encoding='utf-8') as f:
         f.write(content)
+
+
+def redirects():
+    """Старые адреса WordPress (метки, автор, архивы по датам, страницы старого сайта) → живые страницы.
+    На любом хостинге работает мгновенный переход; на сервере лучше ещё и 301 — см. deploy/nginx-redirects.conf."""
+    for old, new in S.get('redirects', {}).items():
+        to = url(new)
+        page = f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Страница перенесена — Кеплер</title>
+<link rel="canonical" href="{abs_url(new)}"><meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url={to}"><script>location.replace({json.dumps(to)})</script></head>
+<body><p>Страница перенесена: <a href="{to}">{esc(abs_url(new))}</a></p></body></html>'''
+        if PREFIX:
+            page = preview_fix(page)
+        if old.endswith('.html'):
+            fp = os.path.join(DIST, old.strip('/'))
+            os.makedirs(os.path.dirname(fp), exist_ok=True)
+        else:
+            d = os.path.join(DIST, old.strip('/'))
+            os.makedirs(d, exist_ok=True)
+            fp = os.path.join(d, 'index.html')
+        if os.path.exists(fp):
+            continue
+        with open(fp, 'w', encoding='utf-8') as f:
+            f.write(page)
 
 
 def main():
@@ -498,7 +549,7 @@ def main():
         f.write(preview_fix(h404) if PREFIX else h404)
     # sitemap и robots
     sm = ''.join(f'<url><loc>{abs_url(u)}</loc><lastmod>{d}</lastmod><priority>{"1.0" if u == "/" else ("0.8" if p["type"] == "page" else "0.6")}</priority></url>'
-                 for u, d, p in sorted(urls, key=lambda x: x[0]) if not p.get('noindex'))
+                 for u, d, p in sorted(urls, key=lambda x: x[0]) if not is_noindex(p))
     open(os.path.join(DIST, 'sitemap.xml'), 'w', encoding='utf-8').write(
         f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sm}</urlset>')
     for alias in ('sitemap_index.xml', 'page-sitemap.xml', 'post-sitemap.xml'):  # старые адреса Yoast, их знают поисковики
@@ -513,6 +564,7 @@ def main():
     if os.path.isdir(st):
         for fn in os.listdir(st):
             shutil.copy(os.path.join(st, fn), os.path.join(DIST, fn))
+    redirects()
     open(os.path.join(DIST, '.nojekyll'), 'w').write('')
     print('страниц:', len(urls), '→', DIST)
 
