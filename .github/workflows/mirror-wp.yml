@@ -1,0 +1,28 @@
+# Выгрузка живого WordPress для статической копии 1:1 (tools/wp_fetch.py).
+# Запуск: Actions → mirror-wp → Run workflow (или пуш этого файла / tools/wp_fetch.py в ветку wp-mirror).
+name: mirror-wp
+on:
+  workflow_dispatch:
+  push:
+    branches: [wp-mirror]
+    paths: ['.github/workflows/mirror-wp.yml', 'tools/wp_fetch.py']
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright==1.48.0 && python -m playwright install --with-deps chromium
+      - run: rm -rf src/wpmirror && python tools/wp_fetch.py
+      - name: Сохранить в репозиторий
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add src/wpmirror
+          git commit -m "Выгрузка WordPress для копии 1:1" || echo "нет изменений"
+          git push
